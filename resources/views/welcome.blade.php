@@ -94,6 +94,12 @@
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
             </div>
+            
         </div>
+        <div style='color: #636b6f; sans-serif;
+font-weight: 200;
+text-align: center;
+margin-top: 0px;'>© 2019 wintersweet.cn 版权所有 ICP证：<a href="http://www.beian.miit.gov.cn" target="_blank">鲁ICP备14021455号-1</a></div>
+        
     </body>
 </html>

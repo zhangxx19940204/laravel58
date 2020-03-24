@@ -47,13 +47,20 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
-
+        
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
+
+        // 'public' => [
+        //     'driver' => 'local',
+        //     'root' => storage_path('app/public'),
+        //     'url' => env('APP_URL').'/storage',
+        //     'visibility' => 'public',
+        // ],
 
         's3' => [
             'driver' => 's3',
@@ -63,6 +70,13 @@ return [
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
         ],
+        
+    	'admin' => [
+	        'driver'     => 'local',
+	        'root'       => public_path('upload'),
+	        'visibility' => 'public',
+	        'url' => env('APP_URL').'/public/upload/',
+	    	],
 
     ],
 
