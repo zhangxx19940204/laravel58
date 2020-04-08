@@ -16,8 +16,7 @@ class EmailDataController extends AdminController
      *
      * @var string
      */
-    protected $title = '邮件数据';
-    
+    protected $title = '邮件列表';
 
     /**
      * Make a grid builder.
@@ -28,38 +27,39 @@ class EmailDataController extends AdminController
     {
         $grid = new Grid(new EmailData);
         $user_obj = Auth::guard('admin')->user();
-        
-        $grid->header(function ($query) {
-        	$user_obj = Auth::guard('admin')->user();
-        	
-		    return $user_obj->id;
-		});
-        
 
-        $grid->column('id', __('Id'));
-        $grid->column('res_name', __('Res name'));
-        $grid->column('res_phone', __('Res phone'));
-        $grid->column('res_date', __('Res date'));
-        $grid->column('res_from', __('Res from'));
-        $grid->column('platform', __('Platform'));
-        $grid->column('complete_info', __('Complete info'));
+        $grid->header(function ($query) {
+            $user_obj = Auth::guard('admin')->user();
+
+            return '用户ID：'.$user_obj->id;
+        });
+
+        $grid->column('id', __('ID'));
+        $grid->column('username', __('用户名'));
+        $grid->column('phone', __('手机'));
+        $grid->column('from', __('来源'));
+        $grid->column('title', __('内容标题'));
+        $grid->column('data_date', __('数据日期'));
+        $grid->column('from_mail', __('发件人'));
+        $grid->column('mail_title', __('邮件标题'));
+        $grid->column('mail_date', __('邮件日期'));
+        $grid->column('mail_content', __('邮件内容'));
         $grid->column('econfig_id', __('Econfig id'));
-		//下面进行测试邮件的东西
-		
-		// $email_data = new EmailData;
-  //      $res_mail_folder_list = $email_data->get_mail_list($single_data);
-        
-        
-        
-		if ($user_obj->id == 1) {
-			// code...
-		} else {
-			$grid->model()->whereIn('user_id', [$user_obj->id]);
-		}
-		
-		var_dump(123456);
-		
+        $grid->column('created_at', __('入库时间'));
+        $grid->column('user_id', __('用户ID'));
+
+
+
+        if ($user_obj->id == 1) {
+            // code...
+
+        } else {
+            $grid->model()->whereIn('user_id', [$user_obj->id]);
+        }
+
+
         return $grid;
+
     }
 
     /**
@@ -73,13 +73,17 @@ class EmailDataController extends AdminController
         $show = new Show(EmailData::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('res_name', __('Res name'));
-        $show->field('res_phone', __('Res phone'));
-        $show->field('res_date', __('Res date'));
-        $show->field('res_from', __('Res from'));
-        $show->field('platform', __('Platform'));
-        $show->field('complete_info', __('Complete info'));
+        $show->field('username', __('Username'));
+        $show->field('phone', __('Phone'));
+        $show->field('from', __('From'));
+        $show->field('title', __('Title'));
+        $show->field('data_date', __('Data date'));
+        $show->field('from_mail', __('From mail'));
+        $show->field('mail_title', __('Mail title'));
+        $show->field('mail_date', __('Mail date'));
+        $show->field('mail_content', __('Mail content'));
         $show->field('econfig_id', __('Econfig id'));
+        $show->field('created_at', __('Created at'));
 
         return $show;
     }
@@ -91,20 +95,21 @@ class EmailDataController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new EmailData);
+        $user_obj = Auth::guard('admin')->user();
+        $form = new Form(new EmailData());
 
-        $form->text('res_name', __('Res name'));
-        $form->text('res_phone', __('Res phone'));
-        $form->text('res_date', __('Res date'));
-        $form->text('res_from', __('Res from'));
-        $form->text('platform', __('Platform'));
-        $form->textarea('complete_info', __('Complete info'));
+        $form->text('username', __('Username'));
+        $form->mobile('phone', __('Phone'));
+        $form->text('from', __('From'));
+        $form->text('title', __('Title'));
+        $form->datetime('data_date', __('Data date'))->default(date('Y-m-d H:i:s'));
+        $form->text('from_mail', __('From mail'));
+        $form->text('mail_title', __('Mail title'));
+        $form->datetime('mail_date', __('Mail date'))->default(date('Y-m-d H:i:s'));
+        $form->textarea('mail_content', __('Mail content'));
         $form->number('econfig_id', __('Econfig id'));
+        $form->number('user_id', __('User id'))->default($user_obj->id);
 
         return $form;
-    }
-    
-    public function get_mail_data(){
-    	return '123456';
     }
 }

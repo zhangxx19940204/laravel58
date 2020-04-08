@@ -35,20 +35,21 @@ class EmailConfigController extends AdminController
         $grid->column('email_address', __('Email address'));
         $grid->column('email_password', __('Email password'));
         $grid->column('host_port', __('Host port'));
-        $grid->column('move_folder', __('move folder'))->editable('select',function($single_data){
-        	//
-        	if (empty($single_data->move_folder)) {
-        		//迁移目录为空  去查询相关的邮箱目录进行读取
-        		$email_config = new EmailConfig;
-        		$res_mail_folder_list = $email_config->get_mail_folder_list($single_data);
-        		return $res_mail_folder_list;
-        	} else {
-        		// //迁移目录不为空 将已读取的邮箱目录展示出来
-        		
-        		return ["$single_data->move_folder"=>$single_data->move_folder];
-        	}
-        	
-		} );
+        $grid->column('status', __('状态'));
+//        $grid->column('move_folder', __('move folder'))->editable('select',function($single_data){
+//        	//
+//        	if (empty($single_data->move_folder)) {
+//        		//迁移目录为空  去查询相关的邮箱目录进行读取
+//        		$email_config = new EmailConfig;
+//        		$res_mail_folder_list = $email_config->get_mail_folder_list($single_data);
+//        		return $res_mail_folder_list;
+//        	} else {
+//        		// //迁移目录不为空 将已读取的邮箱目录展示出来
+//
+//        		return ["$single_data->move_folder"=>$single_data->move_folder];
+//        	}
+//
+//		} );
 		
         $grid->column('create_date', __('Create date'));
         // $grid->username('用户名');
@@ -107,6 +108,7 @@ class EmailConfigController extends AdminController
         $form = new Form(new EmailConfig);
 		
         $form->number('user_id', __('User id'))->default($user_arr['id']);
+        $form->number('status', __('状态'));
         $form->text('email_address', __('Email address'));
         $form->text('email_password', __('Email password'));
         $form->text('host_port', __('Host port'));

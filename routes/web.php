@@ -28,10 +28,15 @@ Route::any('/login', 'miniapp\WeChatController@login');
 Route::any('/getfoodList', 'miniapp\WeChatController@getfoodList');
 
 
-
+Route::any('/get_mail_list', 'extra\ExtraController@get_mail_list');
 
 //生成头像的代码
 
 Route::any('/showupload', 'extra\ExtraController@showupload');
 
+
 Route::any('/uploadimage', 'extra\ExtraController@uploadimage');
+
+
+//制作首页代码
+Route::get('/test', 'loadpage\LoadpageController@test');
