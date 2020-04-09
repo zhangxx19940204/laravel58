@@ -111,9 +111,13 @@ class ExtraController extends Controller
         }
 
         //邮件循环完毕，进行插入数据库和更改状态
+        var_dump($total_mail_data);
         try
         {
+            DB::connection()->enableQueryLog();
             $insert_status = DB::table('email_data')->insert($total_mail_data);
+            dump(DB::getQueryLog());
+
             $mailbox->setFlag($be_to_flaged,'\\Seen \\Flagged'); //将星标的邮件，标志成已读 同时 为已记录邮件标记星标
             $close_status = $mailbox->disconnect();
             if ($close_status){
