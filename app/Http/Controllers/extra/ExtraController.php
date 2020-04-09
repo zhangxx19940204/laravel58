@@ -115,6 +115,12 @@ class ExtraController extends Controller
         {
             $insert_status = DB::table('email_data')->insert($total_mail_data);
             $mailbox->setFlag($be_to_flaged,'\\Seen \\Flagged'); //将星标的邮件，标志成已读 同时 为已记录邮件标记星标
+            $close_status = $mailbox->disconnect();
+            if ($close_status){
+                echo '邮箱关闭';
+            }else{
+                echo '邮箱未关闭';
+            }
 
         }
         //捕获异常
@@ -153,7 +159,6 @@ class ExtraController extends Controller
 
 
         $position_phone_start = strrpos($str, '电话:');
-        $position_phone_end = strrpos($str, ';，提交时');
 
 
 
@@ -161,7 +166,7 @@ class ExtraController extends Controller
         $from = '';
         $title = str_replace('"',"",substr($str,$position_title_first, ($position_title_second-$position_title_first)));
         $data_date = str_replace('时间为：',"",substr($str,$position_date_start, ($position_date_end-$position_date_start)));
-        $phone = str_replace("电话:","",substr($str,$position_phone_start, ($position_phone_end-$position_phone_start)));
+        $phone = str_replace("电话:","",str_replace("电话:","",substr($str,$position_phone_start,18)));
 
         return ['username'=>$username,'phone'=>$phone,'from'=>$from,'title'=>$title,'data_date'=>$data_date];
     }
