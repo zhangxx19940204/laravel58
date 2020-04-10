@@ -70,6 +70,7 @@ class EmailDataController extends AdminController
 
         });
         $grid->expandFilter();
+        $grid->model()->orderBy('created_at', 'desc');
         return $grid;
 
     }
