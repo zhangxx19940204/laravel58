@@ -45,7 +45,7 @@ class EmailDataController extends AdminController
         $grid->column('mail_date', __('邮件日期'));
         $grid->column('mail_content', __('邮件内容'));
         $grid->column('econfig_id', __('Econfig id'));
-        $grid->column('created_at', __('入库时间'));
+        $grid->column('created_at', __('入库时间'))->sortable();
         $grid->column('user_id', __('用户ID'));
 
 
@@ -57,7 +57,19 @@ class EmailDataController extends AdminController
             $grid->model()->whereIn('user_id', [$user_obj->id]);
         }
 
+        $grid->filter(function($filter){
 
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+
+            $filter->like('phone', '手机号');
+
+            $filter->between('created_at', '时间区间')->datetime();
+
+
+
+        });
+        $grid->expandFilter();
         return $grid;
 
     }

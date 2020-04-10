@@ -84,15 +84,24 @@ class ExtraController extends Controller
 
                 $email_title = $email->subject;
                 $email_date =date('Y-m-d H:i:s', strtotime($email->date));
-                $email_content = $email->textPlain;
+                $email_content = $email->textHtml;
 
-                $mail_data = [];
+                echo $email_content.'<br/>';
+                echo $email->textPlain.'<br/>';
+
+//                $mail_data = [];
                 if ($from_email == '2162750756@qq.com'){//此信息由公司内部模板发出
                     //姓名、电话、来源
                     $mail_data = $this->deal_inside_mail($email_content);
                 }else{ //是由的外部模板
                     $mail_data = $this->deal_outside_mail($email_content);
                 }
+
+                echo '<pre>';
+                var_dump($mail_data);
+                echo '</pre>';
+
+
                 $mail_data['from_mail'] = $from_email;
                 $mail_data['mail_title'] = $email_title;
                 $mail_data['mail_date'] = $email_date;
@@ -170,7 +179,7 @@ class ExtraController extends Controller
         $from = '';
         $title = str_replace('"',"",substr($str,$position_title_first, ($position_title_second-$position_title_first)));
         $data_date = str_replace('时间为：',"",substr($str,$position_date_start, ($position_date_end-$position_date_start)));
-        $phone = str_replace("电话:","",str_replace("电话:","",substr($str,$position_phone_start,18)));
+        $phone = str_replace("电话:","",substr($str,$position_phone_start,18));
 
         return ['username'=>$username,'phone'=>$phone,'from'=>$from,'title'=>$title,'data_date'=>$data_date];
     }
