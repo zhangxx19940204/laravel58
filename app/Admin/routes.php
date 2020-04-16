@@ -19,5 +19,9 @@ Route::group([
 
     $router->resource('email-passes', EmailPassController::class);
 
+    //car管理系统
+    $router->resource('car-users', CarUserController::class);
+    $router->resource('car-orders', CarOrderController::class);
+
 });
 
