@@ -13,7 +13,7 @@
         "encore/laravel-admin": "^1.7",
         "fideloper/proxy": "^4.0",
         "laravel-admin-ext/media-manager": "^1.1",
-        "laravel/framework": "5.8.*",
+        "laravel/framework": "6.20.*",
         "laravel/tinker": "^1.0",
         "overtrue/laravel-wechat": "~5.0",
         "php-imap/php-imap": "^3.0",
